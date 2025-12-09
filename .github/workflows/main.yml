@@ -3,9 +3,9 @@ name: Java CI with Maven
 # Kích hoạt workflow khi có push hoặc pull request lên nhánh main
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
