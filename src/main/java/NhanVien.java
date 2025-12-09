@@ -1,10 +1,11 @@
 public class NhanVien {
-    private String maNV;
-    private String tenNV;
-    private int tuoi;
-    private double luong;
-    private String phongBan;
+    private String maNV; // Employee ID
+    private String tenNV; // Employee Name
+    private int tuoi; // Age
+    private double luong; // Salary
+    private String phongBan; // Department
 
+    // Constructor
     public NhanVien(String maNV, String tenNV, int tuoi, double luong, String phongBan) {
         this.maNV = maNV;
         this.tenNV = tenNV;
@@ -13,8 +14,44 @@ public class NhanVien {
         this.phongBan = phongBan;
     }
 
-    // Cần các Getter để Service có thể kiểm tra (nếu cần) và Test có thể Assert
-    public String getMaNV() { return maNV; }
-    public String getTenNV() { return tenNV; }
-    public double getLuong() { return luong; }
+    // Getters and Setters (cho phép chỉnh sửa các thuộc tính)
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
+    }
+
+    public int getTuoi() {
+        return tuoi;
+    }
+
+    public void setTuoi(int tuoi) {
+        this.tuoi = tuoi;
+    }
+
+    public double getLuong() {
+        return luong;
+    }
+
+    public void setLuong(double luong) {
+        this.luong = luong;
+    }
+
+    public String getPhongBan() {
+        return phongBan;
+    }
+
+    public void setPhongBan(String phongBan) {
+        this.phongBan = phongBan;
+    }
 }

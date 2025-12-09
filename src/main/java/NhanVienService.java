@@ -2,33 +2,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NhanVienService {
+    // List để lưu trữ nhân viên, mô phỏng database
+    private List<NhanVien> danhSachNhanVien;
 
-    private final List<NhanVien> danhSachNhanVien = new ArrayList<>();
-
-    public boolean ThemNhanVien(NhanVien nv) {
-        // --- 1. Validate Trường Trống (1 Điểm) ---
-        if (nv.getMaNV() == null || nv.getMaNV().trim().isEmpty() ||
-                nv.getTenNV() == null || nv.getTenNV().trim().isEmpty() ||
-                nv.getLuong() < 0) { // Giả định: luong < 0 cũng là trống/không hợp lệ
-            throw new IllegalArgumentException("Tat ca cac truong du lieu khong duoc de trong/am.");
-        }
-
-        // --- 2. Validate Lương (0 < luong <= 100) (2 Điểm) ---
-        double luong = nv.getLuong();
-        if (luong <= 0) {
-            throw new IllegalArgumentException("Luong phai lon hon 0.");
-        }
-        if (luong > 100.0) { // Giả định đơn vị là triệu
-            throw new IllegalArgumentException("Luong khong duoc vuot qua 100 trieu.");
-        }
-
-        // Thêm nhân viên vào danh sách (giả lập thành công)
-        danhSachNhanVien.add(nv);
-        return true;
+    public NhanVienService() {
+        this.danhSachNhanVien = new ArrayList<>();
     }
 
-    // Hàm hỗ trợ cho Test
-    public int LaySoLuongNhanVien() {
-        return danhSachNhanVien.size();
+    /**
+     * Thêm 1 đối tượng nhân viên vào danh sách.
+     * * @param nv Đối tượng NhanVien cần thêm.
+     * @return true nếu thêm thành công, false nếu thêm thất bại (ví dụ: lương không hợp lệ).
+     * @throws IllegalArgumentException nếu lương không hợp lệ.
+     */
+    public boolean themNhanVien(NhanVien nv) {
+        if (nv == null) {
+            throw new IllegalArgumentException("Đối tượng nhân viên không được null.");
+        }
+
+        double luong = nv.getLuong();
+
+        // Kiểm tra điều kiện Lương > 0 và <= 100,000,000
+        if (luong <= 0 || luong > 100000000) {
+            throw new IllegalArgumentException("Lương phải lớn hơn 0 và nhỏ hơn hoặc bằng 100,000,000.");
+        }
+
+        // Thêm nhân viên vào danh sách (giả lập lưu vào database)
+        return danhSachNhanVien.add(nv);
+    }
+
+    // Hàm hỗ trợ cho Unit Test (kiểm tra số lượng nhân viên đã được thêm)
+    public List<NhanVien> getDanhSachNhanVien() {
+        return danhSachNhanVien;
     }
 }
