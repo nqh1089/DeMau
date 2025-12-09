@@ -1,6 +1,6 @@
-name: Java CI with Maven
+name: Java CI/CD (Optimized)
 
-# Kích hoạt workflow khi có push hoặc pull request lên nhánh main
+# Kích hoạt khi có push hoặc pull request lên nhánh master
 on:
   push:
     branches: [ master ]
@@ -8,9 +8,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build_and_test: # Đổi tên job thành tên mô tả hơn
 
-    runs-on: ubuntu-latest # Chọn hệ điều hành để chạy (runner)
+    runs-on: ubuntu-latest
 
     steps:
       # Bước 1: Checkout code từ repository
@@ -20,15 +20,12 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17' # Thay bằng phiên bản JDK bạn dùng
+          java-version: '17'
           distribution: 'temurin'
-          cache: maven # Nếu dùng Maven
+          cache: maven
 
-      # Bước 3: Chạy Unit Test và Build (kiểm tra pass/fail)
-      - name: Build with Maven
-        run: mvn clean install -DskipTests # Build mà không chạy test (tùy chọn)
-
-      # Bước 4: Chạy Unit Test (Quan trọng nhất)
-      - name: Run Tests
-        run: mvn test
-        # Nếu các unit test (Phần 1, Phần 2) thất bại, bước này sẽ fail và workflow dừng lại.
+      # Bước 3: Build, Compile, và Chạy Unit Test (Đã tích hợp)
+      # Lệnh 'mvn clean verify' thực hiện: clean, compile, test (chạy tất cả Unit Test), package, và verify.
+      # Nếu bước 'test' thất bại, toàn bộ workflow sẽ thất bại (FAILURE).
+      - name: Build and Run All Unit Tests
+        run: mvn clean verify
